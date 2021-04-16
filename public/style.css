@@ -1,0 +1,117 @@
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', monospace;
+}
+
+html,
+body,
+#map {
+    height: 100%;
+    width: auto;
+    color: #FFF;
+}
+
+#loader {
+    /* background: url('spinner.gif') no-repeat center center; */
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999999;
+}
+
+/* .round-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+    display: block;
+    width: 80px;
+    height: 80px;
+    line-height: 80px;
+    border: 2px solid #f5f5f5;
+    border-radius: 50%;
+    color: #f5f5f5;
+    text-align: center;
+    text-decoration: none;
+    background: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 3px gray;
+    font-size: 20px;
+    font-weight: bold;
+} */
+
+.display-in {
+    display: inline-block;
+}
+
+/* .round-button:hover {
+    background: #dddddd;
+    color: rgba(0, 0, 0, 0.5);
+} */
+
+#card {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 1000;
+    min-width: 140px;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.margin-botton-10 {
+    margin-bottom: 10px;
+}
+
+.margin-0 {
+    margin: 0 !important;
+}
+
+.image {
+    width: 42px;
+}
+
+.color-small {
+    color: #c5c5c5;
+}
+
+.main {
+    line-height: 15px;
+}
+
+.font-size-12 {
+    font-size: 12px;
+}
+
+.temHeading {
+    font-size: 32px;
+    vertical-align: top;
+}
+
+.temHeading sup {
+    font-size: 20px;
+}
+
+.others small {
+    line-height: 15px;
+    display: block;
+}
+
+.headingName {
+    margin: 0 0 10px 0;
+    font-weight: 500;
+}
+
+#description {
+    text-transform: capitalize;
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Updates</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+        crossorigin="" />
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+        crossorigin=""></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
+    <!-- custom css -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="loader"></div>
+    <div id="map"></div>
+    <!-- <button id="startBtn" class="round-button">START</button> -->
+    <div id="card">
+        <div class="heading margin-botton-10">
+            <h3 id="name" class="headingName"></h3>
+            <p class="main margin-0 font-size-12 color-small">
+                <span id="date"></span>, <span id="description"></span>
+            </p>
+        </div>
+        <div class="temperature margin-botton-10">
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAABMRJREFUeNrtncuRozAQQCcEQiAEh0AIhMBxjoTgEAiBEBwCIXD1jc2ADLRyVU+tFyMDYz7d4rnqXdazP/qhbqSW+HLOfcF54SIgABcBAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEgHgFi+7g/35mn9NSextN53ASd/GwtvzeL5nrELoAPVipBa2YEeimN/NkXBNAV9EQC024Q9HejxOPvTBDg2Lv9MUz3OwZ+jMe/IUWA/QPvlKFeBPMC+At8VXDHT1FpTQ1mBZBqvlMe+GGNkCHAene9M4qq0cCqAJmQywVtjUnQaqkNonkKkELQQj3wQ69h/iC6eQCZA6gMSVAgwHZpwspoUCBA4HO/33NP7ek8bkAn3+VvRoMWCQwK4IOaBYIe4vGzmWEJDqkJVArgA1ktCPyQKlAg9kYkSE8tgAzp7kPqEQlyQ4+IiXkBfBBSuZPbkQC18l264p0/ZyRorEwWmRZgYSCrp5zvViYbSQVWJosycwL4C54E7vgp2oUF3+zC0PAo0O2RClYT4IPgb00+EKCwtG5gSYBKYfBfCkJJAzdDEqTqBZCCzymlezNJVBhYUq4tCFApFmDyPyG9fP0ZR4G1BGgtCyASXBTPGNbaBXBGsLx2kKgUQKp/Z5B3awca64ISAbahCqQDdfMCpICdHhUV9x1eVAjgL1jhaSIIfHAkkFTQx54GFgkgz/ttZIF/t3agbRRoDhNAgt9HHPyXSSMZBVSlgSMFaCMPfmjtoIl5lXCWAJLz3UmolaeB8ggBmhMJ0CnvJKqPEMCdiZH28mgLwUkBIpjoiU2ATt1EUMyf2J8EEGCeBAiAAAiAAAgQ5wW1BgIgAAIgAAIggGEBOgI56xjaq0xFZ8/EIEBDgIPbwYoodgdPCFAT7NfAH/KIe5AAJUH/7zjZ5Ougz1ECZGfK2fJr15HUV7zptC49t0AXVi/fPX4mMSdARE8C7dKc/bQnMQ8E/jfb7OrfinCkAI3xnJ2veT3kNLRPei770I4nrQJYrQNWP+t35Za7yooAF4PB/zRnF8OheqN+y0q9AMYmhEbP8JNW+foXQ3Ul0uR7dTdrFaC0eufLnftpzt5yn0U/pzA8WoDEQPCvI8Gvre55VNcQonxWsDUc/B8S7QJoPrsvGwS/NNjlXKpvCVM6CjQjBZ/FNvebBQFSA3e/1d1RvYmmUGVv+egGwb/EstFFswCazuapBgJUCLCPBJnG5/6NzjFGAMWp4DKY5nUIsG8qaLU8+yPAEV0q+7/ipZeRJw0s9ljf8XwNTQip3Romq4V7SHCbOos3km3vo/0CqvcGbny2/+yXNkZ2/kFpRoANJQi+om3iPYXRSWBid7BI0G9R5T8FPos86KP9Ama2h69YE4yt7VdnOwbnp1/A1PkA8nTwySPiLYLl3VX7BcwdEPHh28FT7vzXfgGTJ4TItPGStYN6JOc7uJdmj4hZOBpcYprfX7NfwPwZQVIb1AuWd3MC/68YjOaQqDciVBR+YaI7JUxSQ/lUIxQM/ycSYGT+IIl4ahcBln4I+gIB4HxwERCAi4AAgACAAIAAgACAAIAAgACAAIAAgACAAIAAgACAAIAAgACAAIAAgACAAGCavwe/0S/pUz8cAAAAAElFTkSuQmCC"
+                alt="icon" id="icon" class="image">
+            <h3 class="temHeading display-in margin-0"><span id="temperature"></span><sup>&deg;C</sup> </h3>
+        </div>
+        <div class="others">
+            <small class="font-size-12">Feels: <span class="color-small"><span id="feels"></span>&deg;C</span></small>
+            <small class="font-size-12">Humidity: <span class="color-small"><span id="humidity"></span></span></small>
+            <small class="font-size-12">Wind: <span class="color-small"><span id="wind"></span>km/h</span></small>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
