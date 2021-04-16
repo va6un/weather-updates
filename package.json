@@ -1,0 +1,32 @@
+{
+  "name": "weather-updates",
+  "version": "0.1.0",
+  "description": "Weather updates!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/va6un/weather-updates.git"
+  },
+  "keywords": [
+    "weather",
+    "updates",
+    "kerala",
+    "leaflet",
+    "node",
+    "openweather.com"
+  ],
+  "author": "varun",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/va6un/weather-updates/issues"
+  },
+  "homepage": "https://github.com/va6un/weather-updates#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.1"
+  }
+}
