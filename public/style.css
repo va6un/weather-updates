@@ -3,23 +3,20 @@
 *:after {
     box-sizing: border-box;
 }
-
 body {
     margin: 0;
     padding: 0;
     font-family: 'Roboto', monospace;
 }
-
 html,
 body,
 #map {
     height: 100%;
     width: auto;
     color: #FFF;
+    background-color: #FFF;
 }
-
-#loader {
-    /* background: url('spinner.gif') no-repeat center center; */
+#overlay {
     position: absolute;
     top: 0;
     left: 0;
@@ -28,36 +25,13 @@ body,
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 9999999;
 }
-
-/* .round-button {
+.overlay-icon{
+    display: inline;
     position: absolute;
-    top: 10px;
-    right: 10px;
-    z-index: 1000;
-    display: block;
-    width: 80px;
-    height: 80px;
-    line-height: 80px;
-    border: 2px solid #f5f5f5;
-    border-radius: 50%;
-    color: #f5f5f5;
-    text-align: center;
-    text-decoration: none;
-    background: rgba(0, 0, 0, 0.5);
-    box-shadow: 0 0 3px gray;
-    font-size: 20px;
-    font-weight: bold;
-} */
-
-.display-in {
-    display: inline-block;
+    top: 50%;
+    left: 50%;
+    font-size: 40px;
 }
-
-/* .round-button:hover {
-    background: #dddddd;
-    color: rgba(0, 0, 0, 0.5);
-} */
-
 #card {
     position: absolute;
     top: 10px;
@@ -68,38 +42,30 @@ body,
     padding: 10px;
     border-radius: 10px;
 }
-
-.margin-botton-10 {
-    margin-bottom: 10px;
-}
-
-.margin-0 {
-    margin: 0 !important;
-}
-
-.image {
-    width: 42px;
-}
-
 .color-small {
     color: #c5c5c5;
 }
 
 .main {
     line-height: 15px;
+    margin: 0 !important;
 }
 
 .font-size-12 {
     font-size: 12px;
 }
 
-.temHeading {
+.temperature h3 {
+    display: inline-block;
     font-size: 32px;
     vertical-align: top;
+    margin: 10px 0 0;
 }
-
-.temHeading sup {
-    font-size: 20px;
+.temperature img{
+    width: 60px;
+}
+.temperature sup {
+    font-size: 15px;
 }
 
 .others small {
@@ -107,7 +73,7 @@ body,
     display: block;
 }
 
-.headingName {
+.heading h3 {
     margin: 0 0 10px 0;
     font-weight: 500;
 }
