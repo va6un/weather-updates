@@ -45,7 +45,7 @@ const updateUI = (district) => {
     temperature.textContent = parseInt(district.main.temp);
     feels.textContent = parseInt(district.main.feels_like);
     humidity.textContent = district.main.humidity;
-    wind.textContent = district.wind.speed;
+    wind.textContent = parseInt((parseFloat(district.wind.speed) * 3.6));
 }
 
 const letsFly = async () => {
