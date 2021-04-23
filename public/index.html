@@ -1,73 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Primary Meta Tags -->
     <title>Kerala Weather Updates</title>
-    <link rel="shortcut icon" type="image/jpg" href="favicon.ico"/>
-    <meta name="title" content="Kerala Weather Updates">
-    <meta name="description"
-        content="Displays the weather information on map. The weather information are fetched from openweathermap.org. The map tiles are from Mapbox and leaflet as JavaScript mapping library. The webpage is hosted in heroku.com and served by nodejs.">
+    <link rel="shortcut icon" type="image/jpg" href="favicon.ico" />
+    <meta name="title" content="Kerala Weather Updates" />
+    <meta
+      name="description"
+      content="Displays the weather information on map. The weather information are fetched from openweathermap.org. The map tiles are from Mapbox and leaflet as JavaScript mapping library. The webpage is hosted in heroku.com and served by nodejs."
+    />
 
     <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://kerala-weather-updates.herokuapp.com/">
-    <meta property="og:title" content="Kerala Weather Updates">
-    <meta property="og:description"
-        content="Displays the weather information on map. The weather information are fetched from openweathermap.org. The map tiles are from Mapbox and leaflet as JavaScript mapping library. The webpage is hosted in heroku.com and served by nodejs.">
-    <meta property="og:image" content="image.jpg">
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://kerala-weather-updates.herokuapp.com/"
+    />
+    <meta property="og:title" content="Kerala Weather Updates" />
+    <meta
+      property="og:description"
+      content="Displays the weather information on map. The weather information are fetched from openweathermap.org. The map tiles are from Mapbox and leaflet as JavaScript mapping library. The webpage is hosted in heroku.com and served by nodejs."
+    />
+    <meta property="og:image" content="image.jpg" />
 
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://kerala-weather-updates.herokuapp.com/">
-    <meta property="twitter:title" content="Kerala Weather Updates">
-    <meta property="twitter:description"
-        content="Displays the weather information on map. The weather information are fetched from openweathermap.org. The map tiles are from Mapbox and leaflet as JavaScript mapping library. The webpage is hosted in heroku.com and served by nodejs.">
-    <meta property="twitter:image" content="image.jpg">
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta
+      property="twitter:url"
+      content="https://kerala-weather-updates.herokuapp.com/"
+    />
+    <meta property="twitter:title" content="Kerala Weather Updates" />
+    <meta
+      property="twitter:description"
+      content="Displays the weather information on map. The weather information are fetched from openweathermap.org. The map tiles are from Mapbox and leaflet as JavaScript mapping library. The webpage is hosted in heroku.com and served by nodejs."
+    />
+    <meta property="twitter:image" content="image.jpg" />
 
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-        crossorigin="" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+      integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+      crossorigin=""
+    />
     <!-- Make sure you put this AFTER Leaflet's CSS -->
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-        crossorigin=""></script>
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <script
+      src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+      integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+      crossorigin=""
+    ></script>
+    <!-- edgebuffer leaflet plugin -->
+    <script src="./leaflet.edgebuffer.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
 
-    <script src="https://kit.fontawesome.com/84c6c26af9.js" crossorigin="anonymous"></script>
+    <script
+      src="https://kit.fontawesome.com/84c6c26af9.js"
+      crossorigin="anonymous"
+    ></script>
     <!-- custom css -->
-    <link rel="stylesheet" href="style.css">
-</head>
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-<body>
+  <body>
     <div id="overlay">
-        <div class="fa-3x overlay-icon">
-            <i class="fas fa-spinner fa-pulse"></i>
-        </div>
+      <div class="fa-3x overlay-icon">
+        <i class="fas fa-spinner fa-pulse"></i>
+      </div>
     </div>
     <div id="map"></div>
     <div id="card">
-        <div class="heading">
-            <h3 id="city"></h3>
-            <p class="main margin-0 font-size-12 color-small">
-                <span id="date"></span>, <span id="description"></span>
-            </p>
-        </div>
-        <div class="temperature">
-            <img src="" alt=" " id="icon">
-            <h3><span id="temperature"></span><sup class="color-small">&deg;C</sup> </h3>
-        </div>
-        <div class="others">
-            <small class="font-size-12">Feels: <span class="color-small"><span id="feels"></span>&deg;C</span></small>
-            <small class="font-size-12">Humidity: <span class="color-small"><span id="humidity"></span></span></small>
-            <small class="font-size-12">Wind: <span class="color-small"><span id="wind"></span> km/h</span></small>
-        </div>
+      <div class="heading">
+        <h3 id="city"></h3>
+        <p class="main margin-0 font-size-12 color-small">
+          <span id="date"></span>, <span id="description"></span>
+        </p>
+      </div>
+      <div class="temperature">
+        <img src="" alt=" " id="icon" />
+        <h3>
+          <span id="temperature"></span><sup class="color-small">&deg;C</sup>
+        </h3>
+      </div>
+      <div class="others">
+        <small class="font-size-12"
+          >Feels:
+          <span class="color-small"><span id="feels"></span>&deg;C</span></small
+        >
+        <small class="font-size-12"
+          >Humidity: <span class="color-small"><span id="humidity"></span></span
+        ></small>
+        <small class="font-size-12"
+          >Wind:
+          <span class="color-small"><span id="wind"></span> km/h</span></small
+        >
+      </div>
     </div>
     <script src="script.js"></script>
-</body>
-
+  </body>
 </html>
