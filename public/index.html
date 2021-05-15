@@ -53,29 +53,59 @@
     ></script>
     <!-- edgebuffer leaflet plugin -->
     <script src="./leaflet.edgebuffer.js"></script>
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
-      rel="stylesheet"
-    />
 
-    <script
-      src="https://kit.fontawesome.com/84c6c26af9.js"
-      crossorigin="anonymous"
-    ></script>
     <!-- custom css -->
     <link rel="stylesheet" href="style.css" />
   </head>
 
   <body>
     <div id="overlay">
-      <div class="fa-3x overlay-icon">
-        <i class="fas fa-spinner fa-pulse"></i>
+      <p>loading...</p>
+    </div>
+
+    <div id="map"></div>
+
+    <!-- weather card -->
+    <div id="card">
+      <div class="wrapper">
+        <div class="card_header header_wrapper">
+          <div class="icon_meta icon_meta_wrapper">
+            <img src="" id="icon_main" class="icon" />
+            <span class="header_temperature">
+              <h1><span id="temp_main"></span>&deg;C</h1>
+            </span>
+            <div class="header_meta">
+              <small>Feels: <span id="temp_feels"></span>&deg;C</small>
+              <small>Humidity: <span id="humidity"></span></small>
+              <small>Wind: <span id="wind"></span> km/h</small>
+            </div>
+          </div>
+          <div class="location_current_time">
+            <h3><span id="city"></span></h3>
+            <h4 id="date_time"></h4>
+            <h5><span id="main"></span> - <span id="description"></span></h5>
+          </div>
+        </div>
+
+        <div class="card_body body_wrapper">
+          <div class="alert">
+            <h4></h4>
+            <h5></h5>
+            <p></p>
+          </div>
+        </div>
+
+        <div id="card_footer" class="card_footer footer_wrapper"></div>
+        <div class="attribution"><p>Data: <a class="link" href="https://openweathermap.org/" target="_blank">openweathermap.org</a></p></div>
       </div>
     </div>
-    <div id="map"></div>
-    <div id="card">
-      <div class="heading">
+
+    <script src="script.js"></script>
+  </body>
+</html>
+
+<!-- 
+  <div class="heading">
         <h3 id="city"></h3>
         <p class="main margin-0 font-size-12 color-small">
           <span id="date"></span>, <span id="description"></span>
@@ -100,7 +130,4 @@
           <span class="color-small"><span id="wind"></span> km/h</span></small
         >
       </div>
-    </div>
-    <script src="script.js"></script>
-  </body>
-</html>
+ -->

@@ -1,36 +1,36 @@
-const express = require('express');
-const fetch = require('node-fetch');
-require('dotenv').config();
+const express = require("express");
+const fetch = require("node-fetch");
+const districts = require("./districts");
+require("dotenv").config();
+
+const data = require("./districts");
 
 const app = express();
 const port = process.env.PORT || 5050;
 
-app.use(express.static('public'));
+app.use(express.static("public"));
 
-app.get('/api', async (req, res) => {
-    const districts = ['Trivandrum', 'Kollam', 'Alappuzha', 'Pathanamthitta', 'Kottayam', 'Idukki', 'Ernakulam', 'Thrissur', 'Palakkad', 'Malappuram', 'Kozhikode', 'Kalpatta', 'Kannur', 'Kasaragod'];
-    const key = process.env.API_KEY;
-    const weather = [];
+const key = process.env.API_KEY;
 
-    for (district of districts) {
-        const url = `https://api.openweathermap.org/data/2.5/weather?q=${district}&appid=${key}&units=metric`;
-        const response = await fetch(url).then(response => {
-            if (response.ok) {
-                return response;
-            } else {
-                throw new Error('Response from fetch: ', response.ok);
-            }
-        }).catch(error => {
-            console.error(error);
-            res.end();
-        });
-        const data = await response.json();
-        weather.push(data);
-
+app.get("/api", async (req, res) => {
+  const weather = [];
+  for (district of data.districts) {
+    const { city, lat, lon, img } = district;
+    // console.log(city);
+    const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly&appid=${key}&units=metric`;
+    const response = await fetch(url);
+    if (response.ok) {
+      const data = await response.json();
+      data["city"] = city;
+      weather.push(data);
+    } else {
+      console.error("Error fetching openweathermap.com!");
+      res.end();
     }
-    res.json(weather);
-
+  }
+  console.log(`Sending ${weather.length} documents to client.`);
+  res.json(weather);
 });
 app.listen(port, () => {
-    console.log(`Listening to port ${port}`);
+  console.log(`Listening to port ${port}`);
 });
