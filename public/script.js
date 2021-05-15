@@ -1,6 +1,10 @@
 /**
  * handle fetch error: https://stackoverflow.com/questions/38235715/fetch-reject-promise-and-catch-the-error-if-status-is-not-ok
  */
+
+let state = [];
+const replay_btn = document.getElementById("replay_btn");
+replay_btn.disabled = true;
 const card = document.getElementById("card");
 //  card.style.display = "none";
 const map = L.map("map", { zoomControl: false }).setView([8.4833, 76.9167], 9);
@@ -80,7 +84,10 @@ const updateUI = (district) => {
     const img = document.createElement("img");
     img.src = `/icons/${footer_icon}@2x.png`;
     const small_temp = document.createElement("span");
-    small_temp.textContent = `${max_temp}°C`;
+    small_temp.textContent = `${max_temp}`;
+    const sup = document.createElement("sup");
+    sup.textContent = "°C";
+    small_temp.append(sup);
     span.append(small_date);
     span.append(img);
     span.append(small_temp);
@@ -100,12 +107,14 @@ const letsFly = async () => {
 };
 
 const sleep = (time) => new Promise((resolve) => setTimeout(resolve, time));
+const marker = L.marker();
 
 letsFly()
   .then(async (response) => {
-    const state = await response.json();
-    const marker = L.marker();
+    state = await response.json();
+
     for (district of state) {
+      replay_btn.disabled = true;
       // console.log(district);
       const { lat, lon } = district;
       document.getElementById("overlay").style.display = "none";
@@ -120,9 +129,36 @@ letsFly()
       marker.setLatLng([lat, lon]).addTo(map);
       updateUI(district);
       card.style.display = "block";
+
       await sleep(4000);
     }
+    replay_btn.disabled = false;
   })
   .catch((error) => {
     console.log(error);
   });
+
+async function replay() {
+  // console.log(state);
+
+  for (district of state) {
+    replay_btn.disabled = true;
+    // console.log(district);
+    const { lat, lon } = district;
+    document.getElementById("overlay").style.display = "none";
+
+    map.setView([lat, lon], 9, {
+      animate: true,
+      pan: {
+        duration: 3,
+      },
+    });
+
+    marker.setLatLng([lat, lon]).addTo(map);
+    updateUI(district);
+    card.style.display = "block";
+    await sleep(4000);
+  }
+  replay_btn.disabled = false;
+}
+replay_btn.addEventListener("click", replay);

@@ -72,10 +72,12 @@
           <div class="icon_meta icon_meta_wrapper">
             <img src="" id="icon_main" class="icon" />
             <span class="header_temperature">
-              <h1><span id="temp_main"></span>&deg;C</h1>
+              <h1><span id="temp_main"></span><sup>&deg;C</sup></h1>
             </span>
             <div class="header_meta">
-              <small>Feels: <span id="temp_feels"></span>&deg;C</small>
+              <small
+                >Feels: <span id="temp_feels"></span><sup>&deg;C</sup></small
+              >
               <small>Humidity: <span id="humidity"></span></small>
               <small>Wind: <span id="wind"></span> km/h</small>
             </div>
@@ -96,7 +98,18 @@
         </div>
 
         <div id="card_footer" class="card_footer footer_wrapper"></div>
-        <div class="attribution"><p>Data: <a class="link" href="https://openweathermap.org/" target="_blank">openweathermap.org</a></p></div>
+
+        <div class="bottom-wrapper">
+          <button type="button" id="replay_btn">replay</button>
+          <div class="attribution">
+            <small
+              >data:
+              <a class="link" href="https://openweathermap.org/" target="_blank"
+                >openweathermap.org</a
+              ></small
+            >
+          </div>
+        </div>
       </div>
     </div>
 
