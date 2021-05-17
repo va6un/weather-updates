@@ -60,7 +60,7 @@
 
   <body>
     <div id="overlay">
-      <p>loading...</p>
+      <!-- <p>loading...</p> -->
     </div>
 
     <div id="map"></div>
@@ -99,16 +99,34 @@
 
         <div id="card_footer" class="card_footer footer_wrapper"></div>
 
-        <div class="bottom-wrapper">
-          <button type="button" id="replay_btn">replay</button>
-          <div class="attribution">
-            <small
-              >data:
-              <a class="link" href="https://openweathermap.org/" target="_blank"
-                >openweathermap.org</a
-              ></small
-            >
+        <div class="controls">
+          <button type="button" class="btn" id="replay_btn">കേരളം</button>
+          <!-- <button type="button" class="btn" id="kerala_btn">കേരളം</button> -->
+          <div>
+            <input type="checkbox" id="temp_cBox" name="temp_cBox" />
+            <label for="temp_cBox">Temperature</label>
           </div>
+          <div>
+            <input type="checkbox" id="clouds_cBox" name="clouds_cBox" />
+            <label for="clouds_cBox">Clouds</label>
+          </div>
+          <div>
+            <input
+              type="checkbox"
+              id="precipitation_cBox"
+              name="precipitation_cBox"
+            />
+            <label for="precipitation_cBox">Precipitation</label>
+          </div>
+        </div>
+
+        <div class="attribution">
+          <small
+            >data:
+            <a class="link" href="https://openweathermap.org/" target="_blank"
+              >openweathermap.org</a
+            ></small
+          >
         </div>
       </div>
     </div>
@@ -116,31 +134,3 @@
     <script src="script.js"></script>
   </body>
 </html>
-
-<!-- 
-  <div class="heading">
-        <h3 id="city"></h3>
-        <p class="main margin-0 font-size-12 color-small">
-          <span id="date"></span>, <span id="description"></span>
-        </p>
-      </div>
-      <div class="temperature">
-        <img src="" alt=" " id="icon" />
-        <h3>
-          <span id="temperature"></span><sup class="color-small">&deg;C</sup>
-        </h3>
-      </div>
-      <div class="others">
-        <small class="font-size-12"
-          >Feels:
-          <span class="color-small"><span id="feels"></span>&deg;C</span></small
-        >
-        <small class="font-size-12"
-          >Humidity: <span class="color-small"><span id="humidity"></span></span
-        ></small>
-        <small class="font-size-12"
-          >Wind:
-          <span class="color-small"><span id="wind"></span> km/h</span></small
-        >
-      </div>
- -->

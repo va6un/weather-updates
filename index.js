@@ -12,6 +12,19 @@ app.use(express.static("public"));
 
 const key = process.env.API_KEY;
 
+app.get("/current_weather_forecast_city/:coordinates", async (req, res) => {
+  const [latitude, longitude] = req.params.coordinates.split(",");
+  const owm_url = `https://api.openweathermap.org/data/2.5//weather?lat=${latitude}&lon=${longitude}&exclude=minutely,hourly&appid=${key}&units=metric`;
+  const response = await fetch(owm_url);
+  if(response.ok){
+    const data = await response.json();
+    res.json(data);
+  }else{
+    console.error('Failed to get response from OWM.');
+    res.end();
+  }
+});
+
 app.get("/api", async (req, res) => {
   const weather = [];
   for (district of data.districts) {
@@ -31,6 +44,7 @@ app.get("/api", async (req, res) => {
   console.log(`Sending ${weather.length} documents to client.`);
   res.json(weather);
 });
+
 app.listen(port, () => {
   console.log(`Listening to port ${port}`);
 });
