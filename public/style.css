@@ -168,7 +168,9 @@ body,
 }
 @media screen and (max-width: 630px) {
   #card {
-    /* bottom: 10px; */
+    bottom: 18px;
+    top: auto;
+    background-color: rgba(0, 0, 0, 0.2);
   }
   .wrapper {
     /* row-gap: 4em; */

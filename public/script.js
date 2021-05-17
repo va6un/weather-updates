@@ -15,26 +15,76 @@ const card = document.getElementById("card");
 const zoom = 4;
 
 // replay_btn.disabled = true;
+// mapbox://styles/varunb/ckot1kei3056w17ozsetqicvj
 
 //  card.style.display = "none";
-const map = L.map("map", { zoomControl: false });
+
 
 const mapTileURL =
   "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}";
 const mapTileAttribution =
   '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>';
 
-L.tileLayer(mapTileURL, {
-  attribution: mapTileAttribution,
+const streets = L.tileLayer(mapTileURL, {
+  id: "mapbox/streets-v11",
   maxZoom: 18,
   minZoom: 1,
-  id: "mapbox/streets-v11",
   tileSize: 512,
   zoomOffset: -1,
+  attribution: mapTileAttribution,
   edgeBufferTiles: 1,
   accessToken:
     "pk.eyJ1IjoidmFydW5iIiwiYSI6ImNrbmZqYnQwMDJ2ZTUycXA5Y2Zya2QzM3gifQ.r7iv0_XbuD2Y8fzN0BmY8A",
-}).addTo(map);
+});
+const satellite = L.tileLayer(mapTileURL, {
+  id: "mapbox/satellite-v9",
+  maxZoom: 18,
+  minZoom: 1,
+  tileSize: 512,
+  zoomOffset: -1,
+  attribution: mapTileAttribution,
+  edgeBufferTiles: 1,
+  accessToken:
+    "pk.eyJ1IjoidmFydW5iIiwiYSI6ImNrbmZqYnQwMDJ2ZTUycXA5Y2Zya2QzM3gifQ.r7iv0_XbuD2Y8fzN0BmY8A",
+});
+
+const precipitation_layer_url = `https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=e4a7b3e1ec1fca619d10a01bb9b53ba6`;
+const precipitation_layer = L.tileLayer(precipitation_layer_url, {
+  minZoom: 1,
+  maxZoom: 18,
+});
+
+const clouds_layer_url = `https://tile.openweathermap.org/map/clouds_new/{z}/{x}/{y}.png?appid=e4a7b3e1ec1fca619d10a01bb9b53ba6`;
+const clouds_layer = L.tileLayer(clouds_layer_url, {
+  minZoom: 1,
+  maxZoom: 18,
+});
+
+const temp_layer_url = `https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=e4a7b3e1ec1fca619d10a01bb9b53ba6`;
+const temp_layer = L.tileLayer(temp_layer_url, {
+  minZoom: 1,
+  maxZoom: 18,
+});
+const map = L.map("map", { layers: [satellite, streets], zoomControl: false });
+// L.tileLayer(mapTileURL, {
+//   attribution: mapTileAttribution,
+//   maxZoom: 18,
+//   minZoom: 1,
+//   id: "mapbox/streets-v11",
+//   tileSize: 512,
+//   zoomOffset: -1,
+//   edgeBufferTiles: 1,
+//   accessToken:
+//     "pk.eyJ1IjoidmFydW5iIiwiYSI6ImNrbmZqYnQwMDJ2ZTUycXA5Y2Zya2QzM3gifQ.r7iv0_XbuD2Y8fzN0BmY8A",
+// }).addTo(map);
+
+
+var overlayMaps = {
+  "Precipitation": precipitation_layer,
+  "Temperature": temp_layer,
+  "Clouds": clouds_layer
+};
+L.control.layers({"Satellite": satellite, "Streets": streets}, overlayMaps).addTo(map);
 
 const format_UTC_local = (sec, compressed) => {
   const date = new Date(sec * 1000);
@@ -228,28 +278,16 @@ async function weather_updates_kerala() {
   replay_btn.disabled = false;
   // kerala_btn.disabled = true;
 }
-const precipitation_layer_url = `https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=e4a7b3e1ec1fca619d10a01bb9b53ba6`;
-const precipitation_layer = L.tileLayer(precipitation_layer_url, {
-  minZoom: 1,
-  maxZoom: 18,
-});
 
-const clouds_layer_url = `https://tile.openweathermap.org/map/clouds_new/{z}/{x}/{y}.png?appid=e4a7b3e1ec1fca619d10a01bb9b53ba6`;
-const clouds_layer = L.tileLayer(clouds_layer_url, {
-  minZoom: 1,
-  maxZoom: 18,
-});
-
-const temp_layer_url = `https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=e4a7b3e1ec1fca619d10a01bb9b53ba6`;
-const temp_layer = L.tileLayer(temp_layer_url, {
-  minZoom: 1,
-  maxZoom: 18,
-});
 
 replay_btn.addEventListener("click", weather_updates_kerala);
 
 // kerala_btn.addEventListener("click", weather_updates_kerala);
 
+
+
+
+/*
 precipitation_cBox.addEventListener("change", function () {
   if (this.checked) {
     precipitation_layer.addTo(map);
@@ -271,6 +309,9 @@ temp_cBox.addEventListener("change", function () {
     temp_layer.remove();
   }
 });
+*/
+
+
 
 async function get_current_weather_forecast_city(latitude, longitude) {
   const response = await fetch(
@@ -299,8 +340,8 @@ async function init_setup(latitude, longitude) {
     data.name
   );
 
-  precipitation_cBox.checked = true;
-  precipitation_layer.addTo(map);
+  // precipitation_cBox.checked = true;
+  // precipitation_layer.addTo(map);
   card.style.display = "block";
 }
 
