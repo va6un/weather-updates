@@ -60,26 +60,35 @@
 
   <body>
     <div id="overlay">
-      <!-- <p>loading...</p> -->
+      <p class="color_red">loading...</p>
     </div>
 
     <div id="map"></div>
 
     <!-- weather card -->
-    <div id="card">
+    <div id="card" class="card_bg">
       <div class="wrapper">
         <div class="card_header header_wrapper">
           <div class="icon_meta icon_meta_wrapper">
             <img src="" id="icon_main" class="icon" />
             <span class="header_temperature">
-              <h1><span id="temp_main"></span><sup>&deg;C</sup></h1>
+              <h1>
+                <span id="temp_main" class="color_red"></span
+                ><sup class="color_red">&deg;C</sup>
+              </h1>
             </span>
             <div class="header_meta">
               <small
-                >Feels: <span id="temp_feels"></span><sup>&deg;C</sup></small
+                >Feels: <span id="temp_feels" class="color_red"></span
+                ><sup class="color_red">&deg;C</sup></small
               >
-              <small>Humidity: <span id="humidity"></span></small>
-              <small>Wind: <span id="wind"></span> km/h</small>
+              <small
+                >Humidity: <span id="humidity" class="color_red"></span
+              ></small>
+              <small
+                >Wind: <span id="wind" class="color_red"></span
+                ><span class="color_red"> km/h</span></small
+              >
             </div>
           </div>
           <div class="location_current_time">
@@ -100,7 +109,23 @@
         <div id="card_footer" class="card_footer footer_wrapper"></div>
 
         <div class="controls">
-          <button type="button" class="btn" id="replay_btn">കേരളം</button>
+          <button type="button" class="btn background_red" id="replay_btn">
+            കേരളം
+          </button>
+          <div class="slider-container">
+            <input
+              type="range"
+              min="0"
+              max="1"
+              step="0.1"
+              value="0.1"
+              class=""
+              id="slider"
+              name="range_slider"
+            />
+            <label for="range_slider">Opacity</label>
+          </div>
+
           <!-- <button type="button" class="btn" id="kerala_btn">കേരളം</button> -->
           <!-- <div>
             <input type="checkbox" id="temp_cBox" name="temp_cBox" />
@@ -123,7 +148,10 @@
         <div class="attribution">
           <small
             >data:
-            <a class="link" href="https://openweathermap.org/" target="_blank"
+            <a
+              class="link color_red"
+              href="https://openweathermap.org/"
+              target="_blank"
               >openweathermap.org</a
             ></small
           >

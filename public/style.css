@@ -39,12 +39,14 @@ body,
 #overlay {
   display: none;
   position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
+  top: 50%;
+  left: 50%;
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
   height: 100%;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(26, 28, 35, 0.5);
   z-index: 9999999;
 }
 /* .overlay-icon {
@@ -63,11 +65,16 @@ body,
   height: auto;
   z-index: 1000;
   /* min-width: 140px; */
-  background-color: rgba(0, 0, 0, 0.5);
   padding: 10px;
-  border-radius: 5px;
+  border-radius: 2px;
   max-width: 612px;
   min-height: 195px;
+}
+.leaflet-touch .leaflet-control-layers,
+.card_bg {
+  background-color: rgba(26, 28, 35, 0.1);
+  border: none;
+  /* color: #FFF; */
 }
 .icon {
   width: 70px;
@@ -131,9 +138,12 @@ body,
 }
 .controls {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   text-align: start;
   row-gap: 1em;
+}
+.slider-container {
+  text-align: end;
 }
 .attribution {
   text-align: end;
@@ -142,16 +152,28 @@ body,
 }
 .attribution a {
   text-decoration: none;
-  color: #e6e6e6;
+  /* color: #f98080; */
+}
+.color_red,
+.leaflet-touch .leaflet-control-layers {
+  color: #f98080;
+}
+.background_red {
+  background-color: #f98080;
+}
+.header_meta {
+  display: grid;
+  grid-template-columns: 1fr;
+  text-align: start;
 }
 .btn {
   font-size: 1em;
   width: 50px;
-  padding: 5px;
+  padding: 5px 1px 1px;
   color: #fff;
   border: none;
-  border-radius: 5px;
-  background-color: #0075ff;
+  border-radius: 2px;
+  /* background-color: #0075ff; */
   cursor: pointer;
 }
 #replay_btn {
@@ -162,22 +184,24 @@ body,
   border: 1px solid #999999;
   background-color: #cccccc;
   color: #666666;
+  cursor: not-allowed;
 }
 #kerala_btn {
   font-family: "rachana";
 }
-@media screen and (max-width: 630px) {
+@media screen and (max-width: 768px) {
   #card {
     bottom: 18px;
     top: auto;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(26, 28, 35, 0.1);
+    padding: 5px;
   }
   .wrapper {
-    /* row-gap: 4em; */
+    row-gap: 0em;
   }
   .header_wrapper {
     grid-template-columns: repeat(1, 1fr);
-    row-gap: 1em;
+    row-gap: 0em;
   }
   .location_current_time {
     text-align: center;
@@ -189,13 +213,16 @@ body,
   }
   .controls {
     grid-template-columns: repeat(2, 1fr);
+  }
+  .header_meta {
+    text-align: end;
+  }
 }
-}
-@media screen and (max-width: 630px) and (orientation: landscape) {
+/* @media screen and (max-width: 630px) and (orientation: landscape) {
   .footer_wrapper {
     display: none;
   }
-}
+} */
 /* .color-small {
     color: #c5c5c5;
 }

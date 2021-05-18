@@ -7,9 +7,11 @@ let state = [];
 const replay_btn = document.getElementById("replay_btn");
 // const kerala_btn = document.getElementById("kerala_btn");
 
-const precipitation_cBox = document.getElementById("precipitation_cBox");
-const clouds_cBox = document.getElementById("clouds_cBox");
-const temp_cBox = document.getElementById("temp_cBox");
+// const precipitation_cBox = document.getElementById("precipitation_cBox");
+// const clouds_cBox = document.getElementById("clouds_cBox");
+// const temp_cBox = document.getElementById("temp_cBox");
+
+const slider = document.getElementById("slider");
 
 const card = document.getElementById("card");
 const zoom = 4;
@@ -18,7 +20,6 @@ const zoom = 4;
 // mapbox://styles/varunb/ckot1kei3056w17ozsetqicvj
 
 //  card.style.display = "none";
-
 
 const mapTileURL =
   "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}";
@@ -78,13 +79,14 @@ const map = L.map("map", { layers: [satellite, streets], zoomControl: false });
 //     "pk.eyJ1IjoidmFydW5iIiwiYSI6ImNrbmZqYnQwMDJ2ZTUycXA5Y2Zya2QzM3gifQ.r7iv0_XbuD2Y8fzN0BmY8A",
 // }).addTo(map);
 
-
 var overlayMaps = {
-  "Precipitation": precipitation_layer,
-  "Temperature": temp_layer,
-  "Clouds": clouds_layer
+  Precipitation: precipitation_layer,
+  Temperature: temp_layer,
+  Clouds: clouds_layer,
 };
-L.control.layers({"Satellite": satellite, "Streets": streets}, overlayMaps).addTo(map);
+L.control
+  .layers({ Satellite: satellite, Streets: streets }, overlayMaps)
+  .addTo(map);
 
 const format_UTC_local = (sec, compressed) => {
   const date = new Date(sec * 1000);
@@ -279,13 +281,9 @@ async function weather_updates_kerala() {
   // kerala_btn.disabled = true;
 }
 
-
 replay_btn.addEventListener("click", weather_updates_kerala);
 
 // kerala_btn.addEventListener("click", weather_updates_kerala);
-
-
-
 
 /*
 precipitation_cBox.addEventListener("change", function () {
@@ -310,8 +308,6 @@ temp_cBox.addEventListener("change", function () {
   }
 });
 */
-
-
 
 async function get_current_weather_forecast_city(latitude, longitude) {
   const response = await fetch(
@@ -357,8 +353,14 @@ function error(error) {
   init_setup(22.765902276494028, 79.84092208864848);
 }
 
+slider.oninput = function () {
+  // console.log(this.value);
+  card.style.backgroundColor = `rgba(26, 28, 35, ${this.value})`;
+};
+
 if (navigator.geolocation) {
   navigator.geolocation.getCurrentPosition(success, error);
 } else {
   console.log("Geolocation is not supported by browser!");
+  init_setup(22.765902276494028, 79.84092208864848);
 }
