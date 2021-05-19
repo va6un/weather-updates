@@ -54,13 +54,19 @@
     <!-- edgebuffer leaflet plugin -->
     <script src="./leaflet.edgebuffer.js"></script>
 
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
+      integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk"
+      crossorigin="anonymous"
+    />
     <!-- custom css -->
     <link rel="stylesheet" href="style.css" />
   </head>
 
   <body>
     <div id="overlay">
-      <p class="color_red">loading...</p>
+      <i class="fas fa-spinner fa-spin fa-2x color_red"></i>
     </div>
 
     <div id="map"></div>
@@ -118,7 +124,7 @@
               min="0"
               max="1"
               step="0.1"
-              value="0.5"
+              value="0.9"
               class=""
               id="slider"
               name="range_slider"

@@ -39,15 +39,17 @@ body,
 #overlay {
   display: none;
   position: absolute;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+}
+#overlay i {
+  position: relative;
   top: 50%;
   left: 50%;
-  -moz-transform: translateX(-50%) translateY(-50%);
-  -webkit-transform: translateX(-50%) translateY(-50%);
-  transform: translateX(-50%) translateY(-50%);
-  height: 100%;
-  width: 100%;
-  background-color: rgba(26, 28, 35, 0.5);
-  z-index: 9999999;
 }
 /* .overlay-icon {
   display: inline;
@@ -71,11 +73,11 @@ body,
   min-height: 195px;
 }
 .card_bg {
-  background-color: rgba(26, 28, 35, 0.5);
+  background-color: rgba(26, 28, 35, 0.9);
   /* border: none; */
   /* color: #FFF; */
 }
-.leaflet-touch .leaflet-control-layers{
+.leaflet-touch .leaflet-control-layers {
   background-color: rgba(26, 28, 35, 0.9);
 }
 .icon {
@@ -158,10 +160,10 @@ body,
 }
 .color_red,
 .leaflet-touch .leaflet-control-layers {
-  color: #f98080;
+  color: #0e9f6e;
 }
 .background_red {
-  background-color: #f98080;
+  background-color: #0e9f6e;
 }
 .header_meta {
   display: grid;
@@ -195,7 +197,7 @@ body,
   #card {
     bottom: 18px;
     top: auto;
-    background-color: rgba(26, 28, 35, 0.5);
+    background-color: rgba(26, 28, 35, 0.9);
     padding: 5px;
   }
   .wrapper {

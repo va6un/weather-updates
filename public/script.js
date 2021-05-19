@@ -9,7 +9,7 @@ const replay_btn = document.getElementById("replay_btn");
 const slider = document.getElementById("slider");
 
 const card = document.getElementById("card");
-const zoom = 10;
+const zoom = 4;
 
 const mapTileURL =
   "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}";
@@ -58,14 +58,25 @@ const temp_layer = L.tileLayer(temp_layer_url, {
 });
 
 const map = L.map("map", { zoomControl: false });
-const layerGroup = L.layerGroup([satellite, streets]).addTo(map);
+
+const layerGroup = L.layerGroup([satellite, streets]);
+
+const streets_layer_group = L.layerGroup([streets]).addTo(map);
+const satellite_layer_group = L.layerGroup([satellite]);
+
+precipitation_layer.addTo(map);
+
 var overlayMaps = {
   Precipitation: precipitation_layer,
   Temperature: temp_layer,
   Clouds: clouds_layer,
 };
+
 L.control
-  .layers({ Streets: streets, Satellite: satellite }, overlayMaps)
+  .layers(
+    { Streets: streets_layer_group, Satellite: satellite_layer_group },
+    overlayMaps
+  )
   .addTo(map);
 
 const format_UTC_local = (sec, compressed) => {
@@ -227,6 +238,11 @@ map.on("zoomend", async function () {
 //   replay_btn.disabled = false;
 // }
 async function weather_updates_kerala() {
+  slider.value = 0.1;
+  card.style.backgroundColor = `rgba(26, 28, 35, 0.1)`;
+
+  precipitation_layer.remove();
+
   // kerala_btn.disabled = true;
   document.getElementById("overlay").style.display = "block";
   if (state.length > 1) {
