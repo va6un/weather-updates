@@ -70,11 +70,13 @@ body,
   max-width: 612px;
   min-height: 195px;
 }
-.leaflet-touch .leaflet-control-layers,
 .card_bg {
-  background-color: rgba(26, 28, 35, 0.1);
-  border: none;
+  background-color: rgba(26, 28, 35, 0.5);
+  /* border: none; */
   /* color: #FFF; */
+}
+.leaflet-touch .leaflet-control-layers{
+  background-color: rgba(26, 28, 35, 0.9);
 }
 .icon {
   width: 70px;
@@ -193,7 +195,7 @@ body,
   #card {
     bottom: 18px;
     top: auto;
-    background-color: rgba(26, 28, 35, 0.1);
+    background-color: rgba(26, 28, 35, 0.5);
     padding: 5px;
   }
   .wrapper {
@@ -218,47 +220,3 @@ body,
     text-align: end;
   }
 }
-/* @media screen and (max-width: 630px) and (orientation: landscape) {
-  .footer_wrapper {
-    display: none;
-  }
-} */
-/* .color-small {
-    color: #c5c5c5;
-}
-
-.main {
-    line-height: 15px;
-    margin: 0 !important;
-}
-
-.font-size-12 {
-    font-size: 12px;
-}
-
-.temperature h3 {
-    display: inline-block;
-    font-size: 32px;
-    vertical-align: top;
-    margin: 10px 0 0;
-}
-.temperature img{
-    width: 60px;
-}
-.temperature sup {
-    font-size: 15px;
-}
-
-.others small {
-    line-height: 15px;
-    display: block;
-}
-
-.heading h3 {
-    margin: 0 0 10px 0;
-    font-weight: 500;
-}
-
-#description {
-    text-transform: capitalize;
-} */

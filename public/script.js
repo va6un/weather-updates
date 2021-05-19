@@ -5,21 +5,11 @@
 let state = [];
 
 const replay_btn = document.getElementById("replay_btn");
-// const kerala_btn = document.getElementById("kerala_btn");
-
-// const precipitation_cBox = document.getElementById("precipitation_cBox");
-// const clouds_cBox = document.getElementById("clouds_cBox");
-// const temp_cBox = document.getElementById("temp_cBox");
 
 const slider = document.getElementById("slider");
 
 const card = document.getElementById("card");
-const zoom = 4;
-
-// replay_btn.disabled = true;
-// mapbox://styles/varunb/ckot1kei3056w17ozsetqicvj
-
-//  card.style.display = "none";
+const zoom = 10;
 
 const mapTileURL =
   "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}";
@@ -38,7 +28,7 @@ const streets = L.tileLayer(mapTileURL, {
     "pk.eyJ1IjoidmFydW5iIiwiYSI6ImNrbmZqYnQwMDJ2ZTUycXA5Y2Zya2QzM3gifQ.r7iv0_XbuD2Y8fzN0BmY8A",
 });
 const satellite = L.tileLayer(mapTileURL, {
-  id: "mapbox/satellite-v9",
+  id: "mapbox/satellite-streets-v11",
   maxZoom: 18,
   minZoom: 1,
   tileSize: 512,
@@ -66,26 +56,16 @@ const temp_layer = L.tileLayer(temp_layer_url, {
   minZoom: 1,
   maxZoom: 18,
 });
-const map = L.map("map", { layers: [satellite, streets], zoomControl: false });
-// L.tileLayer(mapTileURL, {
-//   attribution: mapTileAttribution,
-//   maxZoom: 18,
-//   minZoom: 1,
-//   id: "mapbox/streets-v11",
-//   tileSize: 512,
-//   zoomOffset: -1,
-//   edgeBufferTiles: 1,
-//   accessToken:
-//     "pk.eyJ1IjoidmFydW5iIiwiYSI6ImNrbmZqYnQwMDJ2ZTUycXA5Y2Zya2QzM3gifQ.r7iv0_XbuD2Y8fzN0BmY8A",
-// }).addTo(map);
 
+const map = L.map("map", { zoomControl: false });
+const layerGroup = L.layerGroup([satellite, streets]).addTo(map);
 var overlayMaps = {
   Precipitation: precipitation_layer,
   Temperature: temp_layer,
   Clouds: clouds_layer,
 };
 L.control
-  .layers({ Satellite: satellite, Streets: streets }, overlayMaps)
+  .layers({ Streets: streets, Satellite: satellite }, overlayMaps)
   .addTo(map);
 
 const format_UTC_local = (sec, compressed) => {
@@ -194,65 +174,63 @@ const letsFly = async () => {
 };
 
 const sleep = (time) => new Promise((resolve) => setTimeout(resolve, time));
+
 const marker = L.marker();
+const icon = L.icon({
+  iconUrl: "./icons/icon.png",
+  iconSize: [50, 44],
+  iconAnchor: [25, 44],
+  popupAnchor: [-3, -76],
+});
+marker.setIcon(icon);
 
-// letsFly()
-//   .then(async (response) => {
-//     state = await response.json();
-
-//     for (district of state) {
-//       replay_btn.disabled = true;
-//       // console.log(district);
-//       const { lat, lon } = district;
-//       document.getElementById("overlay").style.display = "none";
-
-//       map.setView([lat, lon], 8, {
-//         animate: true,
-//         pan: {
-//           duration: 3,
-//         },
-//       });
-
-//       marker.setLatLng([lat, lon]).addTo(map);
-//       updateUI(district);
-//       card.style.display = "block";
-
-//       await sleep(4000);
-//     }
-//     replay_btn.disabled = false;
-//   })
-//   .catch((error) => {
-//     console.log(error);
-//   });
-
-async function replay() {
-  // console.log(state);
-
-  for (district of state) {
-    replay_btn.disabled = true;
-    // console.log(district);
-    const { lat, lon } = district;
-    document.getElementById("overlay").style.display = "none";
-
-    map.setView([lat, lon], 10, {
-      animate: true,
-      pan: {
-        duration: 2,
-      },
-    });
-
-    marker.setLatLng([lat, lon]).addTo(map);
-    updateUI(district);
-    card.style.display = "block";
-    await sleep(4000);
+async function getRatio(start, stop, cardinality, zoom) {
+  const arr = [];
+  const step = (stop - start) / (cardinality - 1);
+  for (var i = 0; i < cardinality; i++) {
+    arr.push(start + step * i);
   }
-  replay_btn.disabled = false;
+  return arr[zoom - 1];
 }
+
+map.on("zoomend", async function () {
+  const zoom = map.getZoom();
+  const ratio = await getRatio(1.1, 0.9, 18, zoom);
+  const x = 50 * ratio;
+  const y = 44 * ratio;
+
+  icon.options.iconSize = [x, y];
+  marker.setIcon(icon);
+});
+
+// async function replay() {
+//   // console.log(state);
+
+//   for (district of state) {
+//     replay_btn.disabled = true;
+//     // console.log(district);
+//     const { lat, lon } = district;
+//     document.getElementById("overlay").style.display = "none";
+
+//     map.setView([lat, lon], 10, {
+//       animate: true,
+//       pan: {
+//         duration: 2,
+//       },
+//     });
+
+//     marker.setLatLng([lat, lon]).addTo(map);
+//     updateUI(district);
+//     card.style.display = "block";
+//     await sleep(4000);
+//   }
+//   replay_btn.disabled = false;
+// }
 async function weather_updates_kerala() {
   // kerala_btn.disabled = true;
   document.getElementById("overlay").style.display = "block";
   if (state.length > 1) {
-    console.log(state);
+    // console.log(state);
   } else {
     const response = await letsFly();
     state = await response.json();
@@ -283,32 +261,6 @@ async function weather_updates_kerala() {
 
 replay_btn.addEventListener("click", weather_updates_kerala);
 
-// kerala_btn.addEventListener("click", weather_updates_kerala);
-
-/*
-precipitation_cBox.addEventListener("change", function () {
-  if (this.checked) {
-    precipitation_layer.addTo(map);
-  } else {
-    precipitation_layer.remove();
-  }
-});
-clouds_cBox.addEventListener("change", function () {
-  if (this.checked) {
-    clouds_layer.addTo(map);
-  } else {
-    clouds_layer.remove();
-  }
-});
-temp_cBox.addEventListener("change", function () {
-  if (this.checked) {
-    temp_layer.addTo(map);
-  } else {
-    temp_layer.remove();
-  }
-});
-*/
-
 async function get_current_weather_forecast_city(latitude, longitude) {
   const response = await fetch(
     `/current_weather_forecast_city/${latitude},${longitude}`
@@ -316,12 +268,14 @@ async function get_current_weather_forecast_city(latitude, longitude) {
   return await response.json();
 }
 async function init_setup(latitude, longitude) {
-  map.setView([latitude, longitude], zoom);
+  map.setView([latitude, longitude], zoom, {
+    animate: true,
+    pan: {
+      duration: 3,
+    },
+  });
+  marker.setLatLng([latitude, longitude]).addTo(map);
 
-  // get the current weather, daily forecast based on lat and lon.
-  // if success, show it on map
-  // else get the weather and forecast of default coordinated. T
-  // This is to be handled in node!
   const data = await get_current_weather_forecast_city(latitude, longitude);
 
   update_header(
@@ -336,8 +290,6 @@ async function init_setup(latitude, longitude) {
     data.name
   );
 
-  // precipitation_cBox.checked = true;
-  // precipitation_layer.addTo(map);
   card.style.display = "block";
 }
 
