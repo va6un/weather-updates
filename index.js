@@ -14,7 +14,7 @@ app.use(express.static("public"));
 
 const key = process.env.API_KEY;
 
-const whitelist = ['https://va6un.github.io/blog'];
+const whitelist = ['https://va6un.github.io'];
 const cors_option = {
   origin: (origin, callback) => {
     if (whitelist.indexOf(origin) !== -1) {
