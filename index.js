@@ -14,7 +14,7 @@ app.use(express.static("public"));
 // app.use(cors())
 const key = process.env.API_KEY;
 
-const whitelist = ['https://determined-kirch-891cdb.netlify.app/'];
+const whitelist = ['https://determined-kirch-891cdb.netlify.app'];
 const cors_option = {
   origin: (origin, callback) => {
     if (whitelist.indexOf(origin) !== -1) {
