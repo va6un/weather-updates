@@ -17,7 +17,7 @@ const mapTileAttribution =
   '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>';
 
 const streets = L.tileLayer(mapTileURL, {
-  id: "mapbox/streets-v11",
+  id: "mapbox/dark-v10",
   maxZoom: 18,
   minZoom: 1,
   tileSize: 512,
